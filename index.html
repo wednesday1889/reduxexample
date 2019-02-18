@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="store.js"></script>
+    <script src="accountAmount.js"></script>
+    <script src="asyncAccountActions.js"></script>
+  </head>
+  <body></body>
+  <script>
+    var accountStore = new Store({
+      accountAmount: accountAmount
+    });
+    // initial state should be 0
+    console.log(accountStore.getState());
+    // have a function subscribe to changes
+    accountStore.subscribe(didSomethingChange);
+    // trigger an async function
+    accountStore.dispatch(verifyAccount());
+    // should still be 0
+    console.log(accountStore.getState());
+
+    function didSomethingChange(args) {
+      // args is the same as st.getState()
+      console.log(args);
+      // console.log(st.getState());
+    }
+  </script>
+</html>

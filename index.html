@@ -4,6 +4,11 @@
     <script src="store.js"></script>
     <script src="accountAmount.js"></script>
     <script src="asyncAccountActions.js"></script>
+
+    <script src="goalDummyData.js"></script>
+    <script src="goalDataProvider.js"></script>
+    <script src="goalReducer.js"></script>
+    <script src="goalActions.js"></script>
   </head>
   <body></body>
   <script>
@@ -23,6 +28,31 @@
       // args is the same as st.getState()
       console.log(args);
       // console.log(st.getState());
+    }
+
+    /* sample for goal */
+
+    var goalStore = new Store({
+      goalReducer: goalReducer
+    });
+
+    goalStore.subscribe(updateGoalWidget);
+
+    // test non async, for things like adjusting data in the UI locally before a webservice is called to save
+    goalStore.dispatch(
+      updateGoal({
+        goalId: 1,
+        status: 6,
+        description: "just in the UI level change",
+        empComments: "empComments"
+      })
+    );
+
+    // once this "async" call is done the whole goal object state has changed
+    goalStore.dispatch(submitGoal({}));
+
+    function updateGoalWidget(goal) {
+      console.log(goal);
     }
   </script>
 </html>
